@@ -49,10 +49,10 @@ Route::prefix('tasks')->group(function () {
     })->name('tasks.destroy');
 
     // Toogle Task
-    Route::put('/{task}/toogle', function (Task $task) {
-        $task->toogleTask();
+    Route::put('/{task}/toggle', function (Task $task) {
+        $task->toggleTask();
         return redirect()->route('tasks.show', ['task' => $task])->with('success', 'Task updated successfully!');
-    })->name('tasks.toogle');
+    })->name('tasks.toggle');
 });
 
 
