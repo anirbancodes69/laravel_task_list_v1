@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Requests\TaskRequest;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\HttpFoundation\Response;
 
 // Redirect to task.index route
 Route::get('/', function () {
@@ -26,13 +26,8 @@ Route::prefix('tasks')->group(function () {
     })->name('tasks.show');
 
     // Store Task
-    Route::post('/', function (Request $request) {
-        $task = Task::create($request->validate([
-            'title' => 'required|max:255',
-            'description' => 'required',
-            'long_description' => 'required',
-        ]));
-
+    Route::post('/', function (TaskRequest $request) {
+        $task = Task::create($request->validated());
         return redirect()->route('tasks.show', ['task' => $task])->with('success', 'Task created successfully!');
     })->name('tasks.store');
 
@@ -42,14 +37,8 @@ Route::prefix('tasks')->group(function () {
     });
 
     // Update Task
-    Route::put('/{task}', function (Request $request, Task $task) {
-
-        $task->update($request->validate([
-            'title' => 'required|max:255',
-            'description' => 'required',
-            'long_description' => 'required',
-        ]));
-
+    Route::put('/{task}', function (TaskRequest $request, Task $task) {
+        $task->update($request->validated());
         return redirect()->route('tasks.show', ['task' => $task])->with('success', 'Task updated successfully!');
     })->name('tasks.update');
 });
