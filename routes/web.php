@@ -34,7 +34,7 @@ Route::prefix('tasks')->group(function () {
     //Edit Task
     Route::get('/{task}/edit', function (Task $task) {
         return view('edit', ['task' => $task]);
-    });
+    })->name('tasks.edit');
 
     // Update Task
     Route::put('/{task}', function (TaskRequest $request, Task $task) {
@@ -47,6 +47,12 @@ Route::prefix('tasks')->group(function () {
         $task->delete();
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully!');
     })->name('tasks.destroy');
+
+    // Toogle Task
+    Route::put('/{task}/toogle', function (Task $task) {
+        $task->toogleTask();
+        return redirect()->route('tasks.show', ['task' => $task])->with('success', 'Task updated successfully!');
+    })->name('tasks.toogle');
 });
 
 
