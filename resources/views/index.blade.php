@@ -8,4 +8,11 @@
 @empty
 <div>No Tasks</div>
 @endforelse
+
+@if ($task->count())
+<nav>
+    {{$tasks->links()}}
+</nav>
+@endif
+
 @endsection

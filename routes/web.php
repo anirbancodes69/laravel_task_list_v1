@@ -13,7 +13,7 @@ Route::get('/', function () {
 Route::prefix('tasks')->group(function () {
     // Task list
     Route::get('/', function () {
-        $tasks = \App\Models\Task::latest()->get();
+        $tasks = \App\Models\Task::latest()->paginate(5);
         return view('index', ['tasks' => $tasks]);
     })->name('tasks.index');
 
