@@ -32,6 +32,8 @@ This is a simple task management application built with Laravel for educational 
 
     The default configuration uses SQLite, so no additional database setup is required.
 
+    (If want to use mysql: then you need to donwload & install docker & start docker desktop in your machine and run: "docker compose up" to spin docker. The docker-compose.yml file is included in project root).
+
 4. Generate application key:
 
     ```
