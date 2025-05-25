@@ -35,6 +35,23 @@ Route::prefix('tasks')->group(function () {
 
         return redirect()->route('tasks.show', ['task' => $task])->with('success', 'Task created successfully!');
     })->name('tasks.store');
+
+    //Edit Task
+    Route::get('/{task}/edit', function (Task $task) {
+        return view('edit', ['task' => $task]);
+    });
+
+    // Update Task
+    Route::put('/{task}', function (Request $request, Task $task) {
+
+        $task->update($request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'long_description' => 'required',
+        ]));
+
+        return redirect()->route('tasks.show', ['task' => $task])->with('success', 'Task updated successfully!');
+    })->name('tasks.update');
 });
 
 
