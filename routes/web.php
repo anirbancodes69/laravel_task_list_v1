@@ -33,7 +33,7 @@ Route::prefix('tasks')->group(function () {
             'long_description' => 'required',
         ]));
 
-        return redirect()->route('tasks.show', ['task' => $task]);
+        return redirect()->route('tasks.show', ['task' => $task])->with('success', 'Task created successfully!');
     })->name('tasks.store');
 });
 
