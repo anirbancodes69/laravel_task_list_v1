@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -61,21 +62,26 @@ Route::get('/', function () {
     return redirect()->route('tasks.index');
 })->name('home');
 
-Route::prefix('tasks')->group(function () use ($tasks) {
+Route::prefix('tasks')->group(function () {
     // Task list
-    Route::get('/', function () use ($tasks) {
+    Route::get('/', function () {
+        $tasks = \App\Models\Task::latest()->get();
         return view('index', ['tasks' => $tasks]);
     })->name('tasks.index');
 
+    // Create Task
+    Route::view('/create', 'create')->name('tasks.create');
+
     // Single Task
-    Route::get('/{id}', function ($id) use ($tasks) {
-        try {
-            $task = collect($tasks)->firstOrFail('id', $id);
-            return view("show", ['task' => $task]);
-        } catch (Exception $e) {
-            abort(Response::HTTP_NOT_FOUND);
-        }
+    Route::get('/{id}', function ($id) {
+        $task = \App\Models\Task::findOrFail($id);
+        return view("show", ['task' => $task]);
     })->name('tasks.show');
+
+    // Store Task
+    Route::post('/', function (Request $request) {
+        dd($request->all());
+    })->name('tasks.store');
 });
 
 
